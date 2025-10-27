@@ -1,0 +1,22 @@
+
+# Read the CSV and prepare YAML data for the app
+import csv
+import yaml
+
+with open('meme_templates.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    templates = list(reader)
+
+# Take first 100 for initial load, rest will be loaded dynamically
+initial_templates = templates[:100]
+
+# Create YAML representation
+yaml_data = yaml.dump({
+    'templates': initial_templates,
+    'total_count': len(templates),
+    'categories': ['comparison', 'decision', 'opinion', 'argument', 'conspiracy', 'scaling', 'plan', 'waiting', 'pain', 'observation', 'reaction', 'success', 'fail', 'surprised', 'thinking', 'rage', 'wholesome', 'dark', 'relatable', 'absurd']
+}, default_flow_style=False, allow_unicode=True)
+
+print("YAML data prepared successfully")
+print(f"Total templates: {len(templates)}")
+print(f"Initial templates for app: {len(initial_templates)}")
